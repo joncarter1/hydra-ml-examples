@@ -1,0 +1,25 @@
+# Project specific
+*/multirun
+*/outputs
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.egg-info/
+
+.idea/
+.vscode/
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/

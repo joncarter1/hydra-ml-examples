@@ -1,0 +1,6 @@
+_target_: sklearn.datasets.make_blobs
+n_samples: 100
+n_features: 3
+cluster_std: 1.0
+shuffle: True
+random_state: ${seed}
