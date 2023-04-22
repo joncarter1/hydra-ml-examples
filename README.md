@@ -11,7 +11,8 @@ https://github.com/joncarter1/hydra-examples/blob/c8cf053e68a84f4b4cfe0318b93087
 3. Object instantiation, which removes the need for boilerplate code to propagate configuration to backing classes/functions.
 https://github.com/joncarter1/hydra-examples/blob/c8cf053e68a84f4b4cfe0318b93087a77094f0a0/basic-example/script.py#L16-L19
 
-## Running the example
+## Getting started
+The following commands can be used to perform a sweep over all combinations of model and dataset.
 
 ### With Conda
 
@@ -28,4 +29,21 @@ docker build --file env/Dockerfile --tag hydra-example .
 docker run hydra-example --multirun dataset=blobs,circles,moons model=randomforest,mlp,svm
 ```
 
+## Advanced usage
+Overriding parameters of the underlying model or dataset:
+```
+python basic-example/script.py model=mlp model.activation=tanh
+python basic-example/script.py model=randomforest model.n_estimators=400
+python basic-example/script.py --multirun dataset=blobs,circles,moons dataset.n_samples=100,500,1000
+```
+Any parameter supported by the backing class can be modified from the command line, even if they aren't explicitly specified in the configuration file, using append syntax[^2]:
+```
+python basic-example/script.py --multirun model=mlp +model.momentum=0.5,0.7,0.9
+```
+In this example the backing class is an MLP from scikit-learn ([docs](https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html)). 
+
+This mechanism is even more convenient with complex neural network definitions e.g. using Pytorch.
+
+
 [^1]: Using [OmegaConf](https://omegaconf.readthedocs.io/en/2.3_branch/)
+[^2]: [Hydra override syntax](https://hydra.cc/docs/advanced/override_grammar/basic/#modifying-the-config-object).
