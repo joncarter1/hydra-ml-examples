@@ -17,7 +17,7 @@ The following commands can be used to perform a sweep over all combinations of m
 ### With Conda
 
 ```
-conda env create --file envs/environment.yaml
+conda env create --file env/environment.yaml
 conda activate hydra-example
 python basic-example/script.py --multirun dataset=blobs,circles,moons model=randomforest,mlp,svm
 ```
