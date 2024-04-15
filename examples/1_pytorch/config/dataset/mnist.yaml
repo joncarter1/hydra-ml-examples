@@ -1,0 +1,13 @@
+im_channels: 1
+im_size: [24, 24]
+num_classes: 10
+train:
+  _target_: torchvision.datasets.MNIST
+  root: /tmp/mnist/train
+  train: False
+  download: True
+test:
+  _target_: torchvision.datasets.MNIST
+  root: /tmp/mnist/train
+  train: False
+  download: True

@@ -1,8 +1,8 @@
 # Configurability with Hydra <img src="https://hydra.cc/img/logo.svg" alt="Hydra logo" style="height: 100px; width:100px; padding: 0px 0px 0px 10px; margin:-10px 0px -15px 0px;"/>
 
-This repository contains a minimal working example of machine learning experiment configuration using [Hydra](https://hydra.cc/).
+This repository contains minimal working examples of machine learning experiment configuration using [Hydra](https://hydra.cc/).
 
-The example highlights three properties of Hydra which make it incredibly useful for machine learning research:
+These examples are intended to highlight three properties of Hydra which make it incredibly useful for machine learning research:
 1. **Hierarchical composition**, using the defaults list.
 https://github.com/joncarter1/hydra-ml-examples/blob/c8cf053e68a84f4b4cfe0318b93087a77094f0a0/basic-example/config/main.yaml#L1-L4
 2. **Variable interpolation**[^1], which ensures a single source of truth for inter-linked configuration options.
@@ -19,7 +19,7 @@ The following commands can be used to perform a sweep over all combinations of m
 ```
 conda env create --file env/environment.yaml
 conda activate hydra-example
-python basic-example/script.py --multirun dataset=blobs,circles,moons model=randomforest,mlp,svm
+python examples/0_basic/script.py --multirun dataset=blobs,circles,moons model=randomforest,mlp,svm
 ```
 
 ### With Docker
@@ -32,15 +32,15 @@ docker run hydra-example --multirun dataset=blobs,circles,moons model=randomfore
 ## Advanced usage
 Overriding parameters of the underlying model or dataset:
 ```
-python basic-example/script.py model=mlp model.activation=tanh
-python basic-example/script.py model=randomforest model.n_estimators=400
-python basic-example/script.py --multirun dataset=blobs,circles,moons dataset.n_samples=100,500,1000
+python examples/0_basic/script.py model=mlp model.activation=tanh
+python examples/0_basic/script.py model=randomforest model.n_estimators=400
+python examples/0_basic/script.py --multirun dataset=blobs,circles,moons dataset.n_samples=100,500,1000
 ```
 **Any parameter supported by the backing class can be modified from the command line.**
 
 For parameters which aren't explicitly specified in the configuration file, this can be achieved using append syntax[^2]:
 ```
-python basic-example/script.py --multirun model=mlp +model.momentum=0.5,0.7,0.9
+python examples/0_basic/script.py --multirun model=mlp +model.momentum=0.5,0.7,0.9
 ```
 In this example the backing class is an MLP from scikit-learn ([docs](https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html)). 
 

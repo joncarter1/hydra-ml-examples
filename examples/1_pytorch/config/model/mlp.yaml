@@ -1,0 +1,8 @@
+_target_: models.MLP
+im_size: ${dataset.im_size}
+in_channels: ${dataset.im_channels}
+hidden_dims:
+  - 128
+  - 128
+num_classes: ${dataset.num_classes}
+activation: relu
