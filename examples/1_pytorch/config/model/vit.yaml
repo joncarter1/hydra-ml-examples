@@ -2,9 +2,9 @@ _target_: models.ViT
 im_size: ${dataset.im_size}
 num_classes: ${dataset.num_classes}
 in_channels: ${dataset.im_channels}
-patch_size: [8, 8]
+patch_size: [4, 4]
 feature_dim: 32
-num_layers: 6
+num_layers: 4
 dim_ff: 256
 nhead: 8
 dropout: 0.1

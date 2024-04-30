@@ -4,9 +4,9 @@ num_classes: ${dataset.num_classes}
 channel_params:
  # Kernel size, out channels, stride
   - [7, 16, 2]
-  - [3, 16, 2]
+  - [3, 16, 1]
   - [3, 32, 2]
-  - [3, 32, 2]
+  - [3, 32, 1]
   - [3, 64, 2]
-  - [3, 64, 2]
+  - [3, 64, 1]
 activation: relu

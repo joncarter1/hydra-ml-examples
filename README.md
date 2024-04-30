@@ -2,7 +2,7 @@
 
 This repository contains minimal working examples of machine learning experiment configuration using [Hydra](https://hydra.cc/).
 
-These examples are intended to highlight three properties of Hydra which make it incredibly useful for machine learning research:
+These examples are intended to highlight some of the properties of Hydra which make it incredibly useful for machine learning research, including:
 1. **Hierarchical composition**, using the defaults list.
 https://github.com/joncarter1/hydra-ml-examples/blob/c8cf053e68a84f4b4cfe0318b93087a77094f0a0/basic-example/config/main.yaml#L1-L4
 2. **Variable interpolation**[^1], which ensures a single source of truth for inter-linked configuration options.
@@ -12,21 +12,21 @@ https://github.com/joncarter1/hydra-ml-examples/blob/c8cf053e68a84f4b4cfe0318b93
 https://github.com/joncarter1/hydra-ml-examples/blob/c8cf053e68a84f4b4cfe0318b93087a77094f0a0/basic-example/script.py#L16-L19
 
 ## Getting started
-The following commands can be used to perform a sweep over all combinations of model and dataset with default parameters.
+The following commands can be used to perform run the basic example: a sweep over all combinations of model and dataset for a toy problem using scikit-learn.
 
 ### With Conda
 
 ```
-conda env create --file env/environment.yaml
-conda activate hydra-example
+conda env create --file examples/0_basic/env/environment.yaml
+conda activate hydra-example-0
 python examples/0_basic/script.py --multirun dataset=blobs,circles,moons model=randomforest,mlp,svm
 ```
 
 ### With Docker
 
 ```
-docker build --file env/Dockerfile --tag hydra-example .
-docker run hydra-example --multirun dataset=blobs,circles,moons model=randomforest,mlp,svm
+docker build --build-arg EXAMPLE="0_basic" --tag hydra-example-0 .
+docker run hydra-example-0 --multirun dataset=blobs,circles,moons model=randomforest,mlp,svm
 ```
 
 ## Advanced usage

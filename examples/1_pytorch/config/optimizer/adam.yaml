@@ -1,0 +1,5 @@
+#https://pytorch.org/docs/stable/generated/torch.optim.Adam.html
+_target_: torch.optim.Adam
+lr: 1e-3
+weight_decay: 0
+params: ???

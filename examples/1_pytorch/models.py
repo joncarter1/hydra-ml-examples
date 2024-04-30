@@ -1,8 +1,12 @@
+import logging
 import torch
 from torch import nn
 
 # https://github.com/arogozhnikov/einops
 from einops.layers.torch import Rearrange
+
+
+logger = logging.getLogger(__name__)
 
 
 class MLP(nn.Module):
@@ -76,7 +80,7 @@ class FCNN(nn.Module):
                     f"Only odd-size kernels are supported, got {kernel_size=}"
                 )
             padding = 1 + kernel_size // 2  # Pad to retain input shape.
-            conv = nn.Conv1d(
+            conv = nn.Conv2d(
                 in_channels,
                 out_channels,
                 kernel_size=kernel_size,
@@ -144,7 +148,7 @@ class ViT(nn.Module):
         # where N_p is the number of patches and P_d is the patch feature dimension.
         # This re-shapes the input images into patches, then projects the patches
         # to the desired feature dimension with a linear layer.
-        # Normalization layers are added in between for good measre.
+        # Normalization layers are added in between for good measure.
         self.to_patch_embedding = nn.Sequential(
             Rearrange(
                 "b c (h p1) (w p2) -> b (h w) (p1 p2 c)",
@@ -157,11 +161,13 @@ class ViT(nn.Module):
         )
         # Learnable positional embedding for each of the patches.
         # Without this, transformer 'sees' a set of unordered patches,
-        # though prior work has shown a transformer does have the capacity
-        # to learn positional information anyway (see NoPE)
+        # though prior work has shown a transformer can still
+        # learn positional information anyway (see NoPE paper)
         self.pos_embedding = nn.Parameter(torch.randn(1, num_patches + 1, feature_dim))
         # The CLS token is an additional, learnable 'patch' that the transformer layers
-        # can use to store information: https://arxiv.org/pdf/2309.16588.pdf
+        # can use to store information. Giving ViT models additional tokens i.e. 'registers'
+        # has been shown to improve interpretability of the resulting attention maps.
+        # See "Vision Transformers Need Registers": https://arxiv.org/pdf/2309.16588.pdf
         self.cls_token = nn.Parameter(torch.randn(1, 1, feature_dim))
         encoder_layer = nn.TransformerEncoderLayer(
             d_model=feature_dim,
@@ -189,14 +195,15 @@ class ViT(nn.Module):
         """
         B = x_BCHW.size(0)
         # Transform images into patches.
-        x_patches = self.to_patch_embedding(x_BCHW)
-        # Add CLS token for each element in the batch.
-        x_BPF = torch.cat((x_patches, self.cls_token.repeat(B)), dim=1)
-        # Add positional information, so the transformer (learns/knows) the ordering of input elements in (train/test).
+        x_BPE = self.to_patch_embedding(x_BCHW)
+        # Add CLS token for each element in the batch: F = E + 1
+        x_BPF = torch.cat((x_BPE, self.cls_token.repeat(B, 1, 1)), dim=1)
+        # Add positional information, so the transformer can learn the ordering of input elements.
         x_BPF += self.pos_embedding
         # Apply the transformer encoder model to the patch features.
         x_BPF = self.transformer_encoder(x_BPF)
         # Average over patch features to get overall feature vector for the image.
+        # Using the CLS token is an alternative method.
         x_BF = x_BPF.mean(dim=1)
         # Transform to logits for classes.
         return self.linear(x_BF)
@@ -212,3 +219,15 @@ def get_activation(name: str, **kwargs):
         return nn.GELU(**kwargs)
     else:
         raise ValueError(f"{name=} is unsupported.")
+
+
+def get_device():
+    """Auto-discover accelerators."""
+    if torch.backends.mps.is_available():
+        device = "mps"
+    elif torch.cuda.is_available():
+        device = "cuda"
+    else:
+        device = "cpu"
+    logger.debug(f"Using {device=}.")
+    return device
