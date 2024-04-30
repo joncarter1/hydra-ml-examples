@@ -1,13 +1,20 @@
+# Image input properties.
 im_channels: 1
-im_size: [24, 24]
+im_size: [28, 28]
 num_classes: 10
+channel_means:
+  - 0.1307
+channel_stds:
+  - 0.3081
 train:
   _target_: torchvision.datasets.MNIST
   root: /tmp/mnist/train
   train: False
   download: True
+  transform: ???
 test:
   _target_: torchvision.datasets.MNIST
   root: /tmp/mnist/train
   train: False
   download: True
+  transform: ???

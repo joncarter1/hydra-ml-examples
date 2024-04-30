@@ -1,0 +1,22 @@
+# Image input properties.
+im_channels: 3
+im_size: [32, 32]
+num_classes: 10
+channel_means:
+  - 0.5
+  - 0.5
+  - 0.5
+channel_stds:
+  - 1
+  - 1
+  - 1
+train:
+  _target_: torchvision.datasets.SVHN
+  root: /tmp/svhn/train
+  split: train
+  download: True
+test:
+  _target_: torchvision.datasets.SVHN
+  root: /tmp/svhn/train
+  split: test
+  download: True

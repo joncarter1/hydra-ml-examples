@@ -1,0 +1,5 @@
+hydra_core~=1.3
+hydra_colorlog~=1.2
+torch
+torchvision
+einops
