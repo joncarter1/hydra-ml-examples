@@ -227,12 +227,19 @@ def get_device():
         device = "mps"
     elif torch.cuda.is_available():
         device = "cuda"
+    elif (xm := get_xm()) is not None:
+        return xm.xla_device()
     else:
-        try:  # See if TPU is available.
-            import torch_xla.core.xla_model as xm
-
-            device = xm.xla_device()
-        except ImportError:
-            device = torch.device("cpu")
+        device = torch.device("cpu")
     logger.debug(f"Using {device=}.")
     return device
+
+
+def get_xm():
+    """Get PyTorch XLA module if available."""
+    try:
+        import torch_xla.core.xla_model as xm
+
+        return xm
+    except ImportError:
+        return None

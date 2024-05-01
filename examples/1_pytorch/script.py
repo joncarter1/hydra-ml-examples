@@ -7,12 +7,14 @@ from torch import nn, optim
 from torch.utils.data import DataLoader
 import torchvision as tv
 
-from models import get_device
+from models import get_device, get_xm
 
 logger = logging.getLogger(__name__)
 
 
-def train(model, device, train_loader, optimizer, epoch, log_interval: int = 10):
+def train(
+    model, device, train_loader, optimizer, epoch, log_interval: int = 10, xm=None
+):
     """Training epoch function."""
     model.train()
     for batch_idx, (data, target) in enumerate(train_loader):
@@ -22,6 +24,10 @@ def train(model, device, train_loader, optimizer, epoch, log_interval: int = 10)
         loss = F.cross_entropy(output, target)
         loss.backward()
         optimizer.step()
+        # XLA specific line for Part 3 of practical:
+        # http://pytorch.org/xla/release/1.9/index.html#running-on-a-single-xla-device
+        if xm is not None:
+            xm.mark_step()
         if batch_idx % log_interval == 0:
             logger.info(
                 "Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}".format(
@@ -62,6 +68,7 @@ def test(model, device, test_loader):
 def main(cfg: DictConfig):
     # Set accelerator.
     device = get_device() if cfg.device == "auto" else cfg.device
+    logger.info(f"Running experiments on {device=}")
     # Instantiate the model. Type hints on instantiations can improve readability.
     model: nn.Module = hydra.utils.instantiate(cfg.model).to(device)
     logger.info(f"Running with model:\n{model}")
@@ -87,8 +94,9 @@ def main(cfg: DictConfig):
         shuffle=True,
     )
     logger.info("Starting training...")
+    xm = get_xm()  # Relevant for Part 3 of practical.
     for epoch in range(cfg.train.epochs):
-        train(model, device, train_loader, optimizer, epoch)
+        train(model, device, train_loader, optimizer, epoch, xm=xm)
     logger.info("Evaluating...")
     test_data: tv.datasets.VisionDataset = hydra.utils.instantiate(
         cfg.dataset.test, transform=transform
