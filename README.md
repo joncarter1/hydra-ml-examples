@@ -4,12 +4,12 @@ This repository contains minimal working examples of machine learning experiment
 
 These examples are intended to highlight some of the properties of Hydra which make it incredibly useful for machine learning research, including:
 1. **Hierarchical composition**, using the defaults list.
-https://github.com/joncarter1/hydra-ml-examples/blob/ff84ff5f72e6f18facb666e179eb524f5ba2f626/examples/0_basic/config/main.yaml#L1-L4
+https://github.com/joncarter1/hydra-ml-examples/blob/bc89f4c1e4777d3cbf98b11ffdd8592b74f0ea30/0_sklearn/config/main.yaml#L1-L4
 4. **Variable interpolation**[^1], which ensures a single source of truth for inter-linked configuration options.
-https://github.com/joncarter1/hydra-ml-examples/blob/ff84ff5f72e6f18facb666e179eb524f5ba2f626/examples/0_basic/config/model/mlp.yaml#L12
-https://github.com/joncarter1/hydra-ml-examples/blob/ff84ff5f72e6f18facb666e179eb524f5ba2f626/examples/0_basic/config/dataset/blobs.yaml#L6
+https://github.com/joncarter1/hydra-ml-examples/blob/bc89f4c1e4777d3cbf98b11ffdd8592b74f0ea30/0_sklearn/config/model/mlp.yaml#L12
+https://github.com/joncarter1/hydra-ml-examples/blob/bc89f4c1e4777d3cbf98b11ffdd8592b74f0ea30/0_sklearn/config/dataset/blobs.yaml#L6
 5. **Object instantiation**, which removes the need for boilerplate code to propagate configuration to backing classes/functions.
-https://github.com/joncarter1/hydra-ml-examples/blob/ff84ff5f72e6f18facb666e179eb524f5ba2f626/examples/0_basic/script.py#L16-L19
+https://github.com/joncarter1/hydra-ml-examples/blob/bc89f4c1e4777d3cbf98b11ffdd8592b74f0ea30/0_sklearn/script.py#L23-L24
 
 ## Getting started
 The following commands can be used to perform run the basic example: a sweep over all combinations of model and dataset for a toy problem using scikit-learn.
