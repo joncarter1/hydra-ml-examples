@@ -14,6 +14,12 @@ logger = logging.getLogger(__name__)
 
 @hydra.main(config_path="config", config_name="main", version_base=None)
 def main(cfg: DictConfig):
+    logger.info("Starting experiment...")
+    # Demonstrate pretty color logging with hydra_colorlog
+    logger.debug("This is a debug message")
+    logger.info("This is an info message")
+    logger.warning("This is a warning message")
+    logger.error("This is an error message")
     # Instantiate the model. Type hints on instantiations can improve readability.
     model: SKLearnClassifier = hydra.utils.instantiate(cfg.model)
     logger.info("Instantiated model: %s", model.__class__.__name__)
@@ -27,12 +33,6 @@ def main(cfg: DictConfig):
     logger.info("Training the model...")
     model.fit(X_train, y_train)
     # Evaluate the model.
-
-    logger.debug("Debug message")
-    logger.info("Info message")
-    logger.warning("Warning message")
-    logger.error("Error message")
-
     logger.info(f"Test score: {model.score(X_test, y_test)}")
 
 
