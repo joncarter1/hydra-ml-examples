@@ -24,21 +24,21 @@ We can also override low-level options, such as specific hyper-parameters of the
 
 Default: MLP training run on MNIST using the Adam optimizer:.
 ```python
-python examples/1_pytorch/script.py
+python script.py
 ```
 Overriding the MLP hidden dims:
 ```python
-python examples/1_pytorch/script.py --multirun model.hidden_dims=[32,64,32]
+python script.py --multirun model.hidden_dims=[32,64,32]
 ```
 
 Sweeping over all models with default hyper-parameters:
 ```python
-python examples/1_pytorch/script.py --multirun model=mlp,cnn,vit
+python script.py --multirun model=mlp,cnn,vit
 ```
 
 Sweeping over a grid of combinations of optimizer and learning rates:
 ```python
-python examples/1_pytorch/script.py --multirun optimizer=adam,sgd optimizer.lr=1e-5,1e-4,1e-3
+python script.py --multirun optimizer=adam,sgd optimizer.lr=1e-5,1e-4,1e-3
 ```
 
 ## Installation

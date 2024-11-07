@@ -17,30 +17,30 @@ The following commands can be used to perform run the basic example: a sweep ove
 ### With Conda
 
 ```
-conda env create --file examples/0_basic/env/environment.yaml
+conda env create --file 0_sklearn/env/environment.yaml
 conda activate hydra-example-0
-python examples/0_basic/script.py --multirun dataset=blobs,circles,moons model=randomforest,mlp,svm
+python 0_sklearn/script.py --multirun dataset=blobs,circles,moons model=randomforest,mlp,svm
 ```
 
 ### With Docker
 
 ```
-docker build --build-arg EXAMPLE="0_basic" --tag hydra-example-0 .
+docker build --build-arg EXAMPLE="0_sklearn" --tag hydra-example-0 .
 docker run hydra-example-0 --multirun dataset=blobs,circles,moons model=randomforest,mlp,svm
 ```
 
 ## Advanced usage
 Overriding parameters of the underlying model or dataset:
 ```
-python examples/0_basic/script.py model=mlp model.activation=tanh
-python examples/0_basic/script.py model=randomforest model.n_estimators=400
-python examples/0_basic/script.py --multirun dataset=blobs,circles,moons dataset.n_samples=100,500,1000
+python 0_sklearn/script.py model=mlp model.activation=tanh
+python 0_sklearn/script.py model=randomforest model.n_estimators=400
+python 0_sklearn/script.py --multirun dataset=blobs,circles,moons dataset.n_samples=100,500,1000
 ```
 **Any parameter supported by the backing class can be modified from the command line.**
 
 For parameters which aren't explicitly specified in the configuration file, this can be achieved using append syntax[^2]:
 ```
-python examples/0_basic/script.py --multirun model=mlp +model.momentum=0.5,0.7,0.9
+python 0_sklearn/script.py --multirun model=mlp +model.momentum=0.5,0.7,0.9
 ```
 In this example the backing class is an MLP from scikit-learn ([docs](https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html)). 
 
