@@ -4,10 +4,6 @@ This example demonstrates how to use the [Optuna sweeper plugin](https://hydra.c
 
 It uses scikit-learn classifiers on toy datasets to keep things fast and focused on the Optuna/Hydra integration.
 
-## Setup
-
-Requires [uv](https://docs.astral.sh/uv/). All commands can be run from the repo root.
-
 ## Usage
 
 ### Step 1: HPO — find best hyperparameters

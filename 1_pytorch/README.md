@@ -41,11 +41,9 @@ Sweeping over a grid of combinations of optimizer and learning rates:
 uv run 1_pytorch/script.py --multirun optimizer=adam,sgd optimizer.lr=1e-5,1e-4,1e-3
 ```
 
-## Installation
+## Notes
 
-Requires [uv](https://docs.astral.sh/uv/). Dependencies are declared inline in `script.py` (PEP 723) and resolved automatically by `uv run`. All commands can be run from the repo root.
-
-n.b. to take advantage of any local accelerator hardware e.g. Apple M1, you may need to follow alternative instructions from the official PyTorch documentation:
+To take advantage of any local accelerator hardware e.g. Apple M1, you may need to follow alternative instructions from the official PyTorch documentation:
 https://pytorch.org/get-started/locally/
 
 ## Acknowledgements
