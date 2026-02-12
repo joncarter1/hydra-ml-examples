@@ -1,3 +1,13 @@
+# /// script
+# requires-python = ">=3.10"
+# dependencies = [
+#     "hydra-core~=1.3",
+#     "hydra-colorlog~=1.2",
+#     "scikit-learn~=1.2",
+#     "pandas~=2.0",
+# ]
+# ///
+
 import hydra
 import logging
 from omegaconf import DictConfig

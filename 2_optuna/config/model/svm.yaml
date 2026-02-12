@@ -1,0 +1,7 @@
+# Full list of kwargs:
+# https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html
+_target_: sklearn.svm.SVC
+C: 1.0
+kernel: rbf
+degree: 3
+random_state: ${seed}

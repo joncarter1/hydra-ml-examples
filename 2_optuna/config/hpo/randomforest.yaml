@@ -1,0 +1,7 @@
+# @package hydra.sweeper
+# Tune randomforest hyperparams with declarative search space definitions.
+study_name: rf_hpo
+params:
+  model.n_estimators: int(interval(50, 500))
+  model.max_depth: int(interval(2, 20))
+  model.min_samples_split: int(interval(2, 10))

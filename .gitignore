@@ -2,9 +2,12 @@
 **multirun
 **outputs
 **.log
+CLAUDE.md
+.claude
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
+.venv/
 *.egg-info/
 
 .idea/

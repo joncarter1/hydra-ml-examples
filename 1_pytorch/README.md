@@ -22,27 +22,28 @@ From the command line, we can override high-level options such as:
 
 We can also override low-level options, such as specific hyper-parameters of the underlying model.
 
-Default: MLP training run on MNIST using the Adam optimizer:.
+Default: MLP training run on MNIST using the Adam optimizer:
 ```python
-python script.py
+uv run 1_pytorch/script.py
 ```
 Overriding the MLP hidden dims:
 ```python
-python script.py --multirun model.hidden_dims=[32,64,32]
+uv run 1_pytorch/script.py --multirun model.hidden_dims=[32,64,32]
 ```
 
 Sweeping over all models with default hyper-parameters:
 ```python
-python script.py --multirun model=mlp,cnn,vit
+uv run 1_pytorch/script.py --multirun model=mlp,cnn,vit
 ```
 
 Sweeping over a grid of combinations of optimizer and learning rates:
 ```python
-python script.py --multirun optimizer=adam,sgd optimizer.lr=1e-5,1e-4,1e-3
+uv run 1_pytorch/script.py --multirun optimizer=adam,sgd optimizer.lr=1e-5,1e-4,1e-3
 ```
 
 ## Installation
-To run these examples, you should install the dependencies from the adjacent `env` folder.
+
+Requires [uv](https://docs.astral.sh/uv/). Dependencies are declared inline in `script.py` (PEP 723) and resolved automatically by `uv run`. All commands can be run from the repo root.
 
 n.b. to take advantage of any local accelerator hardware e.g. Apple M1, you may need to follow alternative instructions from the official PyTorch documentation:
 https://pytorch.org/get-started/locally/

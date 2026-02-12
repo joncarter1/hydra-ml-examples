@@ -1,0 +1,6 @@
+_target_: sklearn.datasets.make_circles
+n_samples: 100
+factor: 0.8
+noise: 0.0
+shuffle: True
+random_state: ${seed}
