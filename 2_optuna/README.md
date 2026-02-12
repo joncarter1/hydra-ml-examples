@@ -38,7 +38,13 @@ After HPO, point `best_params` at the `optimization_results.yaml` from the sweep
 uv run 2_optuna/script.py evaluate=true best_params=/tmp/hydra/logs/script/2025-01-01/12-00-00/optimization_results.yaml
 ```
 
-You can also pass params manually:
+For cross-model HPO results, the best model type is a config group override that must be passed on the CLI (the script will warn you):
+
+```bash
+uv run 2_optuna/script.py evaluate=true model=randomforest best_params=/tmp/hydra/logs/script/2025-01-01/12-00-00/optimization_results.yaml
+```
+
+You can also pass all params manually:
 
 ```bash
 uv run 2_optuna/script.py evaluate=true model.learning_rate_init=0.005 model.alpha=0.0006 model.activation=tanh
