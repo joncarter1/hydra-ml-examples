@@ -1,0 +1,38 @@
+defaults:
+  - dataset: moons
+  - model: mlp
+  - optional hpo: ${model}
+  - override hydra/sweeper: optuna
+  - override hydra/job_logging: colorlog
+  - override hydra/hydra_logging: colorlog
+  - _self_
+
+seed: 42
+test_size: 0.3
+cv_folds: 5
+evaluate: false
+best_params: null
+
+hydra:
+  sweeper:
+    direction: maximize
+    n_trials: 20
+    n_jobs: 1
+    sampler:
+      _target_: optuna.samplers.TPESampler
+      seed: ${seed}
+      n_startup_trials: 5
+  verbose: False
+  job_logging:
+    handlers:
+      console:
+        class: logging.StreamHandler
+        stream: ext://sys.stdout
+      file:
+        filename:
+          ${hydra.runtime.output_dir}/${hydra.job.name}_${oc.select:hydra.job.num, 0}.log
+  run:
+    dir: /tmp/hydra/logs/${hydra.job.name}/${now:%Y-%m-%d}/${now:%H-%M-%S}
+  sweep:
+    dir: /tmp/hydra/logs/${hydra.job.name}/${now:%Y-%m-%d}/${now:%H-%M-%S}
+    subdir: ${hydra.job.num}

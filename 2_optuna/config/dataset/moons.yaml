@@ -1,0 +1,5 @@
+_target_: sklearn.datasets.make_moons
+n_samples: 100
+noise: 0.0
+shuffle: True
+random_state: ${seed}
