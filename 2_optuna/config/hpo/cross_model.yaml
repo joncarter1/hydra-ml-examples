@@ -1,0 +1,7 @@
+# @package hydra.sweeper
+# Sweep over model types with conditional per-model hyperparams
+# defined in search_space.configure().
+study_name: cross_model_hpo
+custom_search_space: search_space.configure
+params:
+  model: choice(randomforest, mlp, svm)
